@@ -252,7 +252,7 @@ export default function ProjectManager() {
                 {/* Прогресс бэк */}
                 <div className='space-y-2'>
                   <div className='flex justify-between text-sm'>
-                    <span className='text-gray-600'>Backend</span>
+                    <span className='text-gray-600'>Подключение backend</span>
                     <span className='font-medium'>
                       {project.progressBackend}%
                     </span>
@@ -272,6 +272,7 @@ export default function ProjectManager() {
                       variant='outline'
                       className='w-full mt-4 bg-transparent'
                       onClick={() => setSelectedProject(project)}
+                      style={{ backgroundColor: '#cbd5e1' }}
                     >
                       Подробнее
                     </Button>
@@ -298,9 +299,7 @@ export default function ProjectManager() {
                       {/* Прогресс */}
                       <div className='space-y-2'>
                         <div className='flex justify-between'>
-                          <span className='font-medium'>
-                            Прогресс верстки по макету
-                          </span>
+                          <span className='font-medium'>Верстка макета</span>
                           <span className='font-bold text-lg'>
                             {project.progressFront}%
                           </span>
@@ -381,7 +380,7 @@ export default function ProjectManager() {
                       <div className='space-y-2'>
                         <div className='flex justify-between'>
                           <span className='font-medium'>
-                            Прогресс подключения API
+                            Подключение backend
                           </span>
                           <span className='font-bold text-lg'>
                             {project.progressBackend}%
