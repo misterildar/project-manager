@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -19,146 +19,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Calendar, Users, Clock, ExternalLink, Github } from 'lucide-react';
-
-// Типы данных
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  status: 'active' | 'completed' | 'paused';
-  team: string[];
-  teamLeader: string;
-  startDate: string;
-  endDate?: string;
-  progressFront: number;
-  progressBackend: number;
-  details: string;
-  repository?: string;
-  figmaUrl?: string;
-  chat: string;
-  boards: string;
-}
-
-// Примеры проектов
-const projects: Project[] = [
-  {
-    id: 1,
-    title: 'UNCO-сканер',
-    description: 'Мобильное приложение для покупки продуктов',
-    status: 'active',
-    teamLeader: 'Илья',
-    team: ['Рамазан', 'Татьяна'],
-    startDate: '2024-01-15',
-    endDate: '2024-06-30',
-    progressFront: 90,
-    progressBackend: 0,
-    details: 'Здесь будет подробное описание проекта.',
-    repository: 'https://gitlab.unco.market/users/sign_in',
-    figmaUrl:
-      'https://www.figma.com/design/NYRTlJbFX8iWdWu9YzopSF/UNCO-Projects?node-id=1374-22050&t=QT9U6zy5N2SprUXm-0',
-    chat: 'https://chat.avbinvest.co/tiddle/channels/unco-scanner_-front',
-    boards:
-      'https://erp.avbinvest.com/app/tasks-proto#/tasks/margaryta.myrnenko@avbinvest.co/282',
-  },
-  {
-    id: 2,
-    title: 'AI Legal Assistant',
-    description:
-      'Автоматизация юридических задач – ИИ помощник, судебная практика, CRM для юристов',
-    status: 'active',
-    teamLeader: 'Лена',
-    team: ['Ильдар', 'Павел'],
-    startDate: '2024-01-15',
-    endDate: '2024-06-30',
-    progressFront: 100,
-    progressBackend: 100,
-    details:
-      'Юридическая платформа для автоматизации рутинных задач: база судебной практики, шаблоны документов, юридический справочник, CRM для юристов и AI-консультант. Оптимизируйте работу с документами и клиентами!',
-    repository: 'https://github.com/AVB-Invest/AI_Legal_Assistant',
-    figmaUrl:
-      'https://www.figma.com/design/a1Cqijskoqo0YVguZo3O5b/Verdictor?node-id=10199-73957&p=f&t=OcarOBfRbVJSVRFC-0',
-    chat: 'https://chat.avbinvest.co/legal-5d-platform/channels/ai-legal-assistant-frontend',
-    boards: '',
-  },
-  {
-    id: 3,
-    title: 'UNCO-сканер',
-    description: 'Мобильное приложение для покупки продуктов',
-    status: 'active',
-    teamLeader: 'Илья',
-    team: ['Рамазан', 'Татьяна'],
-    startDate: '2024-01-15',
-    endDate: '2024-06-30',
-    progressFront: 90,
-    progressBackend: 0,
-    details: 'Здесь будет подробное описание проекта.',
-    repository: 'https://gitlab.unco.market/users/sign_in',
-    figmaUrl:
-      'https://www.figma.com/design/NYRTlJbFX8iWdWu9YzopSF/UNCO-Projects?node-id=1374-22050&t=QT9U6zy5N2SprUXm-0',
-    chat: 'https://chat.avbinvest.co/tiddle/channels/unco-scanner_-front',
-    boards:
-      'https://erp.avbinvest.com/app/tasks-proto#/tasks/margaryta.myrnenko@avbinvest.co/282',
-  },
-  {
-    id: 4,
-    title: 'AI Legal Assistant',
-    description:
-      'Автоматизация юридических задач – ИИ помощник, судебная практика, CRM для юристов',
-    status: 'active',
-    teamLeader: 'Лена',
-    team: ['Ильдар', 'Павел'],
-    startDate: '2024-01-15',
-    endDate: '2024-06-30',
-    progressFront: 100,
-    progressBackend: 100,
-    details:
-      'Юридическая платформа для автоматизации рутинных задач: база судебной практики, шаблоны документов, юридический справочник, CRM для юристов и AI-консультант. Оптимизируйте работу с документами и клиентами!',
-    repository: 'https://github.com/AVB-Invest/AI_Legal_Assistant',
-    figmaUrl:
-      'https://www.figma.com/design/a1Cqijskoqo0YVguZo3O5b/Verdictor?node-id=10199-73957&p=f&t=OcarOBfRbVJSVRFC-0',
-    chat: 'https://chat.avbinvest.co/legal-5d-platform/channels/ai-legal-assistant-frontend',
-    boards: '',
-  },
-  {
-    id: 5,
-    title: 'UNCO-сканер',
-    description: 'Мобильное приложение для покупки продуктов',
-    status: 'active',
-    teamLeader: 'Илья',
-    team: ['Рамазан', 'Татьяна'],
-    startDate: '2024-01-15',
-    endDate: '2024-06-30',
-    progressFront: 90,
-    progressBackend: 0,
-    details: 'Здесь будет подробное описание проекта.',
-    repository: 'https://gitlab.unco.market/users/sign_in',
-    figmaUrl:
-      'https://www.figma.com/design/NYRTlJbFX8iWdWu9YzopSF/UNCO-Projects?node-id=1374-22050&t=QT9U6zy5N2SprUXm-0',
-    chat: 'https://chat.avbinvest.co/tiddle/channels/unco-scanner_-front',
-    boards:
-      'https://erp.avbinvest.com/app/tasks-proto#/tasks/margaryta.myrnenko@avbinvest.co/282',
-  },
-  {
-    id: 6,
-    title: 'AI Legal Assistant',
-    description:
-      'Автоматизация юридических задач – ИИ помощник, судебная практика, CRM для юристов',
-    status: 'active',
-    teamLeader: 'Лена',
-    team: ['Ильдар', 'Павел'],
-    startDate: '2024-01-15',
-    endDate: '2024-06-30',
-    progressFront: 100,
-    progressBackend: 100,
-    details:
-      'Юридическая платформа для автоматизации рутинных задач: база судебной практики, шаблоны документов, юридический справочник, CRM для юристов и AI-консультант. Оптимизируйте работу с документами и клиентами!',
-    repository: 'https://github.com/AVB-Invest/AI_Legal_Assistant',
-    figmaUrl:
-      'https://www.figma.com/design/a1Cqijskoqo0YVguZo3O5b/Verdictor?node-id=10199-73957&p=f&t=OcarOBfRbVJSVRFC-0',
-    chat: 'https://chat.avbinvest.co/legal-5d-platform/channels/ai-legal-assistant-frontend',
-    boards: '',
-  },
-];
+import { Project, projects } from './mockDataProject';
 
 const statusColors = {
   active: 'bg-green-100 text-green-800 border-green-200',
@@ -174,6 +35,24 @@ const statusLabels = {
 
 export default function ProjectManager() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  const [copied, setCopied] = useState(false);
+
+  const copyToClipboard = async (copyName: string) => {
+    if (!navigator.clipboard) return; // нет поддержки
+    try {
+      await navigator.clipboard.writeText(copyName);
+      setCopied(true);
+    } catch {
+      // можно обработать ошибку здесь
+    }
+  };
+
+  useEffect(() => {
+    if (!copied) return;
+    const timer = setTimeout(() => setCopied(false), 2000);
+    return () => clearTimeout(timer);
+  }, [copied]);
 
   return (
     <div className='min-h-screen bg-gray-300 p-4 md:p-6 lg:p-8'>
@@ -320,27 +199,129 @@ export default function ProjectManager() {
                         </p>
                       </div>
 
+                      {/* projectManager */}
+                      {project.productManager && (
+                        <div
+                          className='flex gap-2'
+                          // onClick={() => copyToClipboard(project.teamLeader)}
+                        >
+                          <h4
+                            className='font-semibold mb-2'
+                            style={{ position: 'relative' }}
+                          >
+                            Product Manager -{' '}
+                          </h4>
+                          <p>{project.productManager}</p>
+                          {/* {copied && (
+                          <span
+                            className='text-green-500'
+                            style={{ position: 'absolute', right: '0' }}
+                          >
+                            Скопировано в буфер обмена.
+                          </span>
+                        )} */}
+                        </div>
+                      )}
+
                       {/* Тимлид */}
-                      <div className='flex gap-2'>
-                        <h4 className='font-semibold mb-2'>Тимлид - </h4>
+                      <div
+                        className='flex gap-2'
+                        onClick={() => copyToClipboard(project.teamLeader)}
+                      >
+                        <h4
+                          className='font-semibold mb-2'
+                          style={{ position: 'relative' }}
+                        >
+                          Фронтенд Тимлид -{' '}
+                        </h4>
                         <p>{project.teamLeader}</p>
+                        {copied && (
+                          <span
+                            className='text-green-500'
+                            style={{ position: 'absolute', right: '0' }}
+                          >
+                            Скопировано в буфер обмена.
+                          </span>
+                        )}
                       </div>
 
                       {/* Команда */}
                       <div>
-                        <h4 className='font-semibold mb-2'>Команда проекта</h4>
-                        <div className='flex flex-wrap gap-2'>
+                        <h4 className='font-semibold mb-2'>
+                          Фронтенд разработчики
+                        </h4>
+                        <div
+                          className='flex flex-wrap gap-2'
+                          style={{ position: 'relative' }}
+                        >
                           {project.team.map((member) => (
                             <Badge
                               key={member}
                               variant='outline'
                               className='px-3 py-1'
+                              // onClick={() => copyToClipboard(member)}
                             >
                               {member}
                             </Badge>
                           ))}
+                          {/* {copied && (
+                            <span
+                              className='text-green-500'
+                              style={{ position: 'absolute', right: '0' }}
+                            >
+                              Скопировано в буфер обмена.
+                            </span>
+                          )} */}
                         </div>
                       </div>
+
+                      {/* Ответственный за бэкенд */}
+                      {project.teamLeaderBack && (
+                        <div
+                          className='flex gap-2'
+                          // onClick={() => copyToClipboard(project.teamLeader)}
+                        >
+                          <h4
+                            className='font-semibold mb-2'
+                            style={{ position: 'relative' }}
+                          >
+                            {project.backLanguage} Тимлид -{' '}
+                          </h4>
+                          <p>{project.teamLeaderBack}</p>
+                          {/* {copied && (
+                          <span
+                            className='text-green-500'
+                            style={{ position: 'absolute', right: '0' }}
+                          >
+                            Скопировано в буфер обмена.
+                          </span>
+                        )} */}
+                        </div>
+                      )}
+
+                      {/* projectManager */}
+                      {project.projectManager && (
+                        <div
+                          className='flex gap-2'
+                          // onClick={() => copyToClipboard(project.teamLeader)}
+                        >
+                          <h4
+                            className='font-semibold mb-2'
+                            style={{ position: 'relative' }}
+                          >
+                            Project Manager -{' '}
+                          </h4>
+                          <p>{project.projectManager}</p>
+                          {/* {copied && (
+                          <span
+                            className='text-green-500'
+                            style={{ position: 'absolute', right: '0' }}
+                          >
+                            Скопировано в буфер обмена.
+                          </span>
+                        )} */}
+                        </div>
+                      )}
 
                       {/* Даты */}
                       <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
