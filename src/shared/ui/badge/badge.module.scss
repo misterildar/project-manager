@@ -1,0 +1,44 @@
+// Бейджи
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: calc(var(--radius) * 0.5);
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+
+  &.default {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  &.secondary {
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
+  }
+
+  &.outline {
+    background-color: transparent;
+    border: 1px solid var(--border);
+    color: var(--foreground);
+  }
+
+  &.success {
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+  }
+
+  &.warning {
+    background-color: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+  }
+
+  &.info {
+    background-color: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+  }
+}

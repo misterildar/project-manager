@@ -1,0 +1,26 @@
+// Прогресс бары
+.progress {
+  position: relative;
+  height: 0.5rem;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background-color: var(--secondary);
+
+  &__indicator {
+    height: 100%;
+    width: 100%;
+    flex: 1;
+    background-color: rgb(4, 4, 179);
+    transition: all 0.3s ease;
+    transform-origin: left;
+  }
+
+  &--sm {
+    height: 0.25rem;
+  }
+
+  &--lg {
+    height: 0.75rem;
+  }
+}
