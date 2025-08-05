@@ -105,7 +105,6 @@
 }
 
 .contactLabel {
-  margin-bottom: var(--spacing-sm);
   font-weight: 600;
 }
 
@@ -114,6 +113,7 @@
   flex-wrap: wrap;
   gap: var(--spacing-sm);
   position: relative;
+  margin-top: 10px;
 }
 
 .teamMember {
@@ -165,11 +165,7 @@
 .copyNotification {
   color: #10b981;
   position: absolute;
-  right: 0;
+  left: 0;
   top: -20px;
   font-size: 0.875rem;
-
-  &.top {
-    top: -20px;
-  }
 }
